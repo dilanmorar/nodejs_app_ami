@@ -1,0 +1,49 @@
+{
+  "builders": [{
+    "ami_name": "nodejs-app-{{timestamp}}",
+
+    "type": "amazon-ebs",
+    "access_key": "AKIAIJ2YQUD4NCNOJHUA",
+    "secret_key": "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",
+    "associate_public_ip_address": "true",
+
+    "ssh_keypair_name": "dilan-aws",
+    "ssh_private_key_file": "~/.ssh/dilan-aws.pem",
+
+
+    "region": "eu-west-1",
+    "source_ami_filter": {
+      "filters": {
+        "virtualization-type": "hvm",
+        "name": "*ubuntu-bionic-18.04-amd64-server-*",
+        "root-device-type": "ebs"
+      },
+      "owners": ["099720109477"],
+      "most_recent": true
+    },
+    "instance_type": "t2.micro",
+    "ssh_username": "ubuntu"
+  }],
+  "provisioners": [
+    {
+      "type": "chef-solo",
+      "cookbook_paths": ["./berks-cookbooks"],
+      "run_list": ["nodejs_app_ami::default"]
+    },
+    {
+      "type": "shell",
+      "inline": ["mkdir /home/ubuntu/app"]
+    },
+    {
+      "type": "file",
+      "source": "node-sample-app/app/",
+      "destination": "/home/ubuntu/app"
+    },
+    {
+      "type": "shell",
+      "inline": ["cd /home/ubuntu/app", "sudo npm install"]
+    }
+
+  ]
+
+}
