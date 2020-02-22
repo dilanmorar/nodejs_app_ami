@@ -4,8 +4,8 @@ TODO: Enter the cookbook description here.
 
 This cookbook was created in the aim of having all the dependencies required to run the node sample app and then to create an ami using packer.
 
-## Cookbook
-This cookbook was created using chef `chef generate cookbook nodejs_app_ami` and it contains the dependencies in the recipe needed to run the node sample app. It also contains a Berksfile which has the chef supermarket and the metadata and is used to manage the dependencies of the cookbook and a berks-cookbooks `berks vendor`. It also has a proxy.conf used to create a reverse proxy.
+## Chef
+Chef was used to create a cookbook using `chef generate cookbook nodejs_app_ami` and it contains the dependencies in the recipe needed to run the node sample app. It also contains a Berksfile which has the chef supermarket and the metadata and is used to manage the dependencies of the cookbook and a berks-cookbooks `berks vendor`. It also has a proxy.conf used to create a reverse proxy.
 
 ## Packer
 Packer is used to create immutable images of our machines. I used packer to create an AMI in AWS. I specified the configuration of this in the packer.json where I also copied the file containing the app into the image. Now if you start an instance using the ami you can also run the app
